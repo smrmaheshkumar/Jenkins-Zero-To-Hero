@@ -50,8 +50,8 @@ pipeline {
     stage('Push Docker Image to Nexus') {
       environment {
         DOCKER_IMAGE = "smrmaheshkumar/ultimate-cicd:${BUILD_NUMBER}"
-        NEXUS_REGISTRY = "https://35.95.110.234:5000"
-        NEXUS_IMAGE = "https://35.95.110.234:5000/ultimate-cicd:${BUILD_NUMBER}"
+        NEXUS_REGISTRY = "35.95.110.234:5000"
+        NEXUS_IMAGE = "35.95.110.234:5000/ultimate-cicd:${BUILD_NUMBER}"
       }
       steps {
         withCredentials([usernamePassword(credentialsId: 'nexus-docker-cred', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
