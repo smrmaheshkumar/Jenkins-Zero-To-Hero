@@ -149,28 +149,5 @@ pipeline {
         echo "Pipeline completed with status: ${currentBuild.currentResult}"
       }
     }
-    success {
-      slackSend(
-        color: 'good',
-        message: "SUCCESS: Job '${env.JOB_NAME}' (${env.BUILD_NUMBER})"
-      )
-    }
-    failure {
-      slackSend(
-        color: 'danger',
-        message: "FAILED: Job '${env.JOB_NAME}' (${env.BUILD_NUMBER})"
-      )
-      emailext (
-        subject: "FAILED: Job '${env.JOB_NAME}' (${env.BUILD_NUMBER})",
-        body: "Check console output at ${env.BUILD_URL}",
-        to: 'smr.maheshkumar@gmail.com'
-      )
-    }
-    unstable {
-      slackSend(
-        color: 'warning',
-        message: "UNSTABLE: Job '${env.JOB_NAME}' (${env.BUILD_NUMBER})"
-      )
-    }
   }
 }
