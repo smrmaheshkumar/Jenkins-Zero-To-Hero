@@ -55,12 +55,12 @@ pipeline {
       steps {
         withCredentials([usernamePassword(credentialsId: 'nexus-docker-cred', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
           script {
-            sh '''
+            sh """
               docker tag ${DOCKER_IMAGE} ${NEXUS_IMAGE}
               echo "$NEXUS_PASS" | docker login $NEXUS_REGISTRY -u "$NEXUS_USER" --password-stdin
               docker push ${NEXUS_IMAGE}
               docker logout $NEXUS_REGISTRY
-            '''
+            """
           }
         }
       }
