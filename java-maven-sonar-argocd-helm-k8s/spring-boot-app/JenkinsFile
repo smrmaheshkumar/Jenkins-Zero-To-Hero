@@ -5,9 +5,8 @@ pipeline {
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
     }
   }
-  
+
   environment {
-    // Shared environment variables
     DOCKER_IMAGE = "smrmaheshkumar/ultimate-cicd:${BUILD_NUMBER}"
     NEXUS_REGISTRY = "35.95.110.234:5000"
     NEXUS_IMAGE = "${NEXUS_REGISTRY}/ultimate-cicd:${BUILD_NUMBER}"
@@ -16,7 +15,8 @@ pipeline {
     GIT_USER_NAME = "smrmaheshkumar"
     DOCKER_REGISTRY = "index.docker.io/v1/"
   }
-  
+
+  stages {
     stage('Checkout SCM') {
       steps {
         checkout([
@@ -73,8 +73,8 @@ pipeline {
     stage('Push to Nexus') {
       steps {
         withCredentials([usernamePassword(
-          credentialsId: 'nexus-docker-cred', 
-          usernameVariable: 'NEXUS_USER', 
+          credentialsId: 'nexus-docker-cred',
+          usernameVariable: 'NEXUS_USER',
           passwordVariable: 'NEXUS_PASS'
         )]) {
           script {
@@ -99,23 +99,16 @@ pipeline {
         withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
           script {
             dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests') {
-              // Clean workspace thoroughly
               sh '''
                 git reset --hard HEAD
                 git clean -fdx
                 git pull origin main
               '''
-              
-              // Update deployment file
               sh "sed -i 's/replaceImageTag/${env.BUILD_NUMBER}/g' deployment.yml"
-              
-              // Configure git
               sh '''
                 git config user.email "smr.maheshkumar@gmail.com"
                 git config user.name "smrmaheshkumar"
               '''
-              
-              // Commit and push changes
               withEnv(["GIT_URL=https://${GITHUB_TOKEN}@github.com/${env.GIT_USER_NAME}/${env.GIT_REPO_NAME}.git"]) {
                 sh '''
                   git add deployment.yml
@@ -130,7 +123,7 @@ pipeline {
       }
     }
   }
-  
+
   post {
     always {
       script {
