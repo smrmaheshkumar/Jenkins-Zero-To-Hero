@@ -49,7 +49,7 @@ pipeline {
 
     stage('Push Docker Image to Nexus') {
       environment {
-        NEXUS_REGISTRY = "https://35.95.110.234:5000"
+        NEXUS_REGISTRY = "https://35.95.110.234:8081"
         NEXUS_IMAGE = "https://35.95.110.234:5000/ultimate-cicd:${BUILD_NUMBER}"
       }
       steps {
