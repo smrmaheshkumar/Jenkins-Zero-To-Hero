@@ -72,8 +72,10 @@ pipeline {
 
     stage('Push to Docker Hub') {
       steps {
-        docker.withRegistry("https://${env.DOCKER_REGISTRY}", 'docker-cred') {
-          docker.image("${env.DOCKER_IMAGE}").push()
+        script {
+          docker.withRegistry("https://${env.DOCKER_REGISTRY}", 'docker-cred') {
+            docker.image("${env.DOCKER_IMAGE}").push()
+          }
         }
       }
     }
