@@ -8,9 +8,9 @@ pipeline {
 
   environment {
     DOCKER_IMAGE = "smrmaheshkumar/ultimate-cicd:${BUILD_NUMBER}"
-    NEXUS_REGISTRY = "35.95.110.234:5000"
+    NEXUS_REGISTRY = "52.43.124.187:8081"
     NEXUS_IMAGE = "${NEXUS_REGISTRY}/ultimate-cicd:${BUILD_NUMBER}"
-    SONAR_URL = "http://54.187.40.41:9000"
+    SONAR_URL = "http://35.89.216.127:9000"
     GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
     GIT_USER_NAME = "smrmaheshkumar"
     DOCKER_REGISTRY = "index.docker.io/v1/"
