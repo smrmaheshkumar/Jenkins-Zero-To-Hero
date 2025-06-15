@@ -17,19 +17,10 @@ pipeline {
   }
 
   stages {
-    stage('Checkout SCM') {
+    stage('Checkout') {
       steps {
-        checkout([
-          $class: 'GitSCM',
-          branches: [[name: 'main']],
-          extensions: [
-            [$class: 'CleanBeforeCheckout'],
-            [$class: 'RelativeTargetDirectory', relativeTargetDir: '.']
-          ],
-          userRemoteConfigs: [[
-            url: "https://github.com/${env.GIT_USER_NAME}/${env.GIT_REPO_NAME}.git"
-          ]]
-        ])
+        sh 'echo passed'
+        //git branch: 'main', url: 'https://github.com/smrmaheshkumar/Jenkins-Zero-To-Hero.git'
       }
     }
 
